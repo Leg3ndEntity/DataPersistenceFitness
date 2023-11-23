@@ -8,15 +8,6 @@
 import Foundation
 import HealthKit
 
-extension Double {
-    func fString() -> String{
-        let numberFormatter = NumberFormatter()
-        numberFormatter.numberStyle = .decimal
-        numberFormatter.maximumFractionDigits = 0
-        return numberFormatter.string(from: NSNumber(value: self))!
-    }
-}
-
 struct HourlyCalorieView: Identifiable {
     let id = UUID()
     let date: Date
@@ -32,25 +23,31 @@ class HealthKitManager: NSObject, ObservableObject {
     @Published var standValue: Int = 0
     @Published var stepValue: Int = 0
     @Published var walkDistance: Double = 0.0
-    
-    func requestAuthorization() {
-        let typesToRead: Set = [
-            HKQuantityType.quantityType(forIdentifier: .activeEnergyBurned)!,
-            //            HKQuantityType.quantityType(forIdentifier: .appleExerciseTime)!,
-            //            HKQuantityType.quantityType(forIdentifier: .appleStandTime)!,
-            HKQuantityType.quantityType(forIdentifier: .stepCount)!,
-            HKQuantityType.quantityType(forIdentifier: .distanceWalkingRunning)!,
-            HKObjectType.activitySummaryType()
-        ]
-        
-        healthStore.requestAuthorization(toShare: nil, read: typesToRead, completion: { (success, error) in
-            if success {
-                print("Requested authorization")
-            } else {
-                print("Failed to request authorization: \(error?.localizedDescription ?? "")")
+   
+    func requestAuthorization(completion: @escaping (Bool) -> Void) {
+            guard HKHealthStore.isHealthDataAvailable() else {
+                print("HealthKit non è disponibile su questo dispositivo.")
+                completion(false)
+                return
             }
-        })
-    }
+
+            let typesToRead: Set<HKObjectType> = [
+                HKObjectType.quantityType(forIdentifier: .activeEnergyBurned)!,
+                HKObjectType.quantityType(forIdentifier: .stepCount)!,
+                HKObjectType.quantityType(forIdentifier: .distanceWalkingRunning)!,
+                HKObjectType.activitySummaryType()
+            ]
+
+            healthStore.requestAuthorization(toShare: nil, read: typesToRead) { (success, error) in
+                if success {
+                    print("HealthKit autorizzato.")
+                    completion(true)
+                } else {
+                    print("Failed to authorize HealthKit: \(error?.localizedDescription ?? "")")
+                    completion(false)
+                }
+            }
+        }
     
     func fetchHourlyCalories(completion: @escaping ([HourlyCalorieView]) -> Void) {
         let calories = HKQuantityType.quantityType(forIdentifier: .activeEnergyBurned)!

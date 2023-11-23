@@ -11,7 +11,7 @@ struct TabBar: View {
     var body: some View {
         TabView{
             MainPageView().tabItem {
-                Label("Summary", systemImage: "person")
+                Label("Summary", systemImage: "circle.dashed")
             }
             Text("Soon").tabItem { VStack{Image(systemName: "figure.run.circle.fill"); Text("Fitness+") }.tag(2)}
             Text("Soon").tabItem { VStack{Image(systemName: "person.2.fill") ; Text("Sharing")}.tag(2)

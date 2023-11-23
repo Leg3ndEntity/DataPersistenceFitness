@@ -52,6 +52,7 @@ struct CalendarView: View {
                 RingView(percentage: 0.7, backgroundColor: .ringColor2, startColor: .ringColor1, endColor: .ringColor3, thickness: 10)
             }
         }.font(.callout)
+            .accessibilityHidden(true)
     }
 }
 

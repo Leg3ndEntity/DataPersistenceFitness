@@ -8,7 +8,6 @@
 import SwiftUI
 
 struct MainPageView: View {
-    @StateObject private var sharedData = SharedData()
     @StateObject var healthKitManager = HealthKitManager()
     
     let currentDateTime = Date()
@@ -36,12 +35,14 @@ struct MainPageView: View {
                                 .fontWeight(.heavy)
                         }
                         Spacer()
-                        Image(systemName: "person.crop.circle.fill")
-                            .resizable()
-                            .frame(width: 40, height: 40, alignment: /*@START_MENU_TOKEN@*/.center/*@END_MENU_TOKEN@*/)
-                            .onTapGesture {
-                                isShowingAccount.toggle()
-                            }
+                        Button{
+                            isShowingAccount.toggle()
+                        } label: {
+                            Image(systemName: "person.crop.circle.fill")
+                                .resizable()
+                                .frame(width: 40, height: 40, alignment: /*@START_MENU_TOKEN@*/.center/*@END_MENU_TOKEN@*/)
+                                .foregroundColor(.white)
+                        }.accessibilityLabel("Account")
                     }.frame(width: 330)
                     
                     Section {
@@ -54,27 +55,15 @@ struct MainPageView: View {
                     }
                 }
             }.scrollIndicators(.hidden)
+                .scrollDisabled(true)
             
-        }.onAppear {
-            healthKitManager.requestAuthorization()
-            healthKitManager.startEnergyQuery(quantityTypeIdentifier: .activeEnergyBurned)
-            healthKitManager.startStepQuery(quantityTypeIdentifier: .stepCount)
-            healthKitManager.startWalkQuery(quantityTypeIdentifier: .distanceWalkingRunning)
-        }
-        //.navigationBarBackButtonHidden(true)
-        .sheet(isPresented: $isShowingAccount, content: {
-            ModalView().presentationDetents([.large])
-        })
-//        .fullScreenCover(isPresented: $isShowingLogin, content: {
-//            LoginView(height: "", weight: "")
-//        })
-        .fullScreenCover(isPresented: $isShowingGoal, content: {
-            GoalView()
-        })
+        }.preferredColorScheme(.dark)
+            .sheet(isPresented: $isShowingAccount, content: {
+                ModalView().presentationDetents([.large])
+            })
     }
 }
 
 #Preview {
     MainPageView()
-        .preferredColorScheme(.dark)
 }

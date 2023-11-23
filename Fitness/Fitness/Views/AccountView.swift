@@ -9,9 +9,7 @@ import SwiftUI
 import SwiftData
 
 struct AccountView: View {
-    @State private var birthday: Date = (Calendar.current.date(byAdding: DateComponents(year: -20), to: Date()) ?? Date())
     @Environment(\.dismiss) var dismiss
-    @Environment(\.colorScheme) var colorScheme
     
     @State var isShowingPicker: Bool = false
     @State var click: Bool = false
@@ -28,10 +26,6 @@ struct AccountView: View {
         let dateFormatter = DateFormatter()
         dateFormatter.dateFormat = "dd MMM yyyy"
         return dateFormatter.string(from: date)
-    }
-    
-    func formattedText(bho: String) -> String{
-        return bho
     }
     
     var body: some View {
@@ -52,29 +46,28 @@ struct AccountView: View {
                     Text("Date of Birth")
                     Spacer()
                     Text(formattedDate(date: userData[0].birthDate))
-                    
-                }
+                }.accessibilityElement(children: .combine)
                 HStack{
                     Text("Sex")
                     Spacer()
                     Text(userData[0].sex)
-                }
+                }.accessibilityElement(children: .combine)
                 HStack{
                     Text("Height")
                     Spacer()
-                    Text(String(userData[0].height))
-                }
+                    Text("\(Int(userData[0].height)) cm")
+                }.accessibilityElement(children: .combine)
                 HStack{
                     Text("Weight")
                     Spacer()
-                    Text(String(userData[0].weight))
-                }
+                    Text("\(Int(userData[0].weight)) kg")
+                }.accessibilityElement(children: .combine)
             }.frame(height: 250)
             ZStack {
                 RoundedRectangle(cornerRadius: 15)
                     .frame(width:350, height:60)
                     .foregroundColor(Color(red: 0.169, green: 0.169, blue: 0.182))
-                
+                    .accessibilityHidden(/*@START_MENU_TOKEN@*/true/*@END_MENU_TOKEN@*/)
                 Text("Done")
                     .font(.title2)
                     .fontWeight(.bold)
@@ -83,13 +76,9 @@ struct AccountView: View {
                 .onTapGesture {
                     dismiss()
                 }
-        }.sheet(isPresented: $isShowingPicker, content: {
-            DatePicker(selection: $birthday, displayedComponents: .date){}
-                .padding(10)
-                .labelsHidden()
-                .datePickerStyle(.wheel)
-                .presentationDetents([.fraction(0.3)])
-        })
+                .accessibilityElement(children: .combine)
+                .accessibilityAddTraits(.isButton)
+        }.preferredColorScheme(.dark)
     }
 }
 

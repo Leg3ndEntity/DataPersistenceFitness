@@ -67,6 +67,11 @@ struct GoalSelectorView: View {
                             stopTimer()
                         }
                     }){}
+                    .accessibilityRemoveTraits(AccessibilityTraits.isImage)
+                    .accessibilityLabel("Minus")
+                    .accessibilityAddTraits(.isButton)
+                    .accessibilityHint("10 kilocalories less")
+                
                 
                 Text("\(counter)")
                     .font(.system(size: 70))
@@ -88,6 +93,10 @@ struct GoalSelectorView: View {
                             stopTimer()
                         }
                     }){}
+                    .accessibilityRemoveTraits(AccessibilityTraits.isImage)
+                    .accessibilityLabel("Plus")
+                    .accessibilityAddTraits(.isButton)
+                    .accessibilityHint("10 kilocalories more")
             }
         }
         Text("KILOCALORIES/DAY")

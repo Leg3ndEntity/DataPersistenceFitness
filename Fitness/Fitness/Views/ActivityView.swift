@@ -6,11 +6,12 @@
 //
 
 import SwiftUI
+import SwiftData
 
 struct ActivityView: View {
     
-    @EnvironmentObject var sharedData: SharedData
     @EnvironmentObject var healthKitManager: HealthKitManager
+    @Query var goal: [Goal]
     
     let currentDateTime = Date()
     func formattedDate(date: Date) -> String {
@@ -21,6 +22,9 @@ struct ActivityView: View {
     
     var body: some View {
         
+        let cal: Int = healthKitManager.energyBurnedValue
+        let goal: Int = goal[0].goal
+        let percentage: Double = Double(cal)/Double(goal)
         let formattedTotalWalkTime = String(format: "%.2f", healthKitManager.walkDistance)
         NavigationStack{
             ZStack(alignment: .top){
@@ -28,21 +32,23 @@ struct ActivityView: View {
                     ZStack {
                         VStack {
                             ZStack {
-                                RingView(percentage: 0.75, backgroundColor: .ringColor2, startColor: .ringColor1, endColor: .ringColor3, thickness: 70)
+                                RingView(percentage: percentage, backgroundColor: .ringColor2, startColor: .ringColor1, endColor: .ringColor3, thickness: 70)
                                     .scaledToFit()
                                     .scaleEffect(0.75)
+                                    .accessibilityLabel(Text("\(Int(percentage*100))%"))
                                 Image(systemName: "arrow.forward")
                                     .resizable()
                                     .frame(width: 25, height: 25, alignment: /*@START_MENU_TOKEN@*/.center/*@END_MENU_TOKEN@*/)
                                     .foregroundColor(.black)
                                     .padding(.bottom, 195)
                                     .bold()
+                                    .accessibilityHidden(/*@START_MENU_TOKEN@*/true/*@END_MENU_TOKEN@*/)
                             }.padding(.top, 55)
                             VStack(alignment: .leading, spacing: 0){
                                 Text("Move")
                                     .fontWeight(.bold)
                                 HStack(spacing: 0.0) {
-                                    Text("\(healthKitManager.energyBurnedValue)/\(sharedData.counter)")
+                                    Text("\(cal)/\(goal)")
                                         .font(.title)
                                         .fontWeight(.bold)
                                     Text("KCAL")
@@ -54,6 +60,7 @@ struct ActivityView: View {
                                     .foregroundColor(.ringColor1)
                             }.padding(.trailing, 160)
                                 .padding(.top, -65)
+                                .accessibilityElement(children: .combine)
                             
                             
                             ChartView()
@@ -77,6 +84,7 @@ struct ActivityView: View {
                                         .fontWeight(.bold)
                                         .foregroundColor(.gray)
                                 }
+                                .accessibilityElement(children: .combine)
                                 VStack(alignment: .leading, spacing: 0){
                                     Text("Distance")
                                         .fontWeight(.bold)
@@ -85,6 +93,7 @@ struct ActivityView: View {
                                         .fontWeight(.bold)
                                         .foregroundColor(.gray)
                                 }
+                                .accessibilityElement(children: .combine)
                             }.padding(.trailing, 110)
                                 .padding(.top, 30)
                         }
@@ -95,7 +104,13 @@ struct ActivityView: View {
                         ToolbarItem{
                             HStack(spacing: 30) {
                                 Image(systemName: "calendar")
+                                    .accessibilityRemoveTraits(AccessibilityTraits.isImage)
+                                    .accessibilityLabel("Calendar")
+                                    .accessibilityAddTraits(.isButton)
                                 Image(systemName: "square.and.arrow.up")
+                                    .accessibilityRemoveTraits(AccessibilityTraits.isImage)
+                                    .accessibilityLabel("Share")
+                                    .accessibilityAddTraits(.isButton)
                             } .foregroundColor(.accentColor1)
                         }
                     }
@@ -103,7 +118,7 @@ struct ActivityView: View {
                 
                 ZStack {
                     BlurView(style: .dark)
-                        .frame(width: 400, height: 180, alignment: .top)
+                        .frame(width: 400, height: 170, alignment: .top)
                         .edgesIgnoringSafeArea(.top)
                         .padding(.bottom, 600)
                     CalendarView()
@@ -111,7 +126,7 @@ struct ActivityView: View {
                         .scaleEffect(0.9)
                 }
             }
-        }
+        }.preferredColorScheme(.dark)
     }
 }
 

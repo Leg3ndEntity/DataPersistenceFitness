@@ -8,17 +8,16 @@
 import SwiftUI
 
 struct LoginView: View {
+    
     @EnvironmentObject var healthKitManager: HealthKitManager
     @State private var birthday: Date = (Calendar.current.date(byAdding: DateComponents(year: -20), to: Date()) ?? Date())
     @State var height: String
     @State var weight: String
     
-    @Environment(\.dismiss) var dismiss
-    @Environment(\.colorScheme) var colorScheme
     @Environment(\.modelContext) var modelContext
     
     @State var isShowingPicker: Bool = false
-    @State var click: Bool = false
+    @State var isShowingGoal: Bool = false
     
     @State var num2 = 1
     @State var num3 = 1
@@ -63,10 +62,8 @@ struct LoginView: View {
                     Text("Date of Birth")
                     Spacer()
                     Text(formattedDate(date: birthday))
-                    //.foregroundColor(click ? /*@START_MENU_TOKEN@*/Color("AccentColor1")/*@END_MENU_TOKEN@*/ : .gray)
                         .onTapGesture {
                             isShowingPicker.toggle()
-                            click.toggle()
                         }
                 }
                 Picker(selection: $num2, label: Text("Sex")) {
@@ -79,21 +76,23 @@ struct LoginView: View {
                     Text("Height")
                     Spacer()
                     TextField("172", text: $height)
-                        .padding(.leading, 225)
+                        .padding(.leading, 223)
                         .keyboardType(.numberPad)
                 }
                 HStack{
                     Text("Weight")
                     Spacer()
                     TextField("67", text: $weight)
-                        .padding(.leading, 228)
+                        .padding(.leading, 226)
                         .keyboardType(.numberPad)
                 }
             }.frame(height: 250)
+            
             ZStack {
                 RoundedRectangle(cornerRadius: 15)
                     .frame(width:350, height:60)
                     .foregroundColor(Color(red: 0.169, green: 0.169, blue: 0.182))
+                    .accessibilityHidden(/*@START_MENU_TOKEN@*/true/*@END_MENU_TOKEN@*/)
                 
                 Text("Continue")
                     .font(.title2)
@@ -102,17 +101,23 @@ struct LoginView: View {
             }.padding(.top, 145)
                 .onTapGesture {
                     modelContext.insert(User(birthDate: birthday, sex: selectedText, weight: Double(weight)!, height: Double(height)!))
-                    dismiss()
+                    isShowingGoal.toggle()
                 }
-        }.onAppear {
-            healthKitManager.requestAuthorization()
-        }
+                .accessibilityElement(children: .combine)
+                .accessibilityAddTraits(.isButton)
+        }.preferredColorScheme(.dark)
         .sheet(isPresented: $isShowingPicker, content: {
             DatePicker(selection: $birthday, displayedComponents: .date){}
                 .padding(10)
                 .labelsHidden()
                 .datePickerStyle(.wheel)
                 .presentationDetents([.fraction(0.3)])
+                .accessibilityAddTraits(.isButton)
+        })
+        .fullScreenCover(isPresented: $isShowingGoal, content: {
+            withAnimation {
+                GoalView()
+            }
         })
     }
 }

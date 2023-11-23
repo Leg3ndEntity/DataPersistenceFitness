@@ -19,6 +19,7 @@ struct ChartView: View {
             }.padding(.horizontal, -2)
                 .frame(height: 125)
                 .foregroundColor(.ringColor1)
+                .accessibilityHidden(true)
         }
     }
 }

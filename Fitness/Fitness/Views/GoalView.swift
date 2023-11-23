@@ -7,18 +7,15 @@
 
 import SwiftUI
 
-class SharedData: ObservableObject {
-    @Published var counter = 120
-}
-
 struct GoalView: View {
     
-    @EnvironmentObject var sharedData: SharedData
-    @Environment(\.dismiss) var dismiss
-    @State var num = 1
-    @State private var selectedMode = 1
+    @AppStorage("isWelcomeScreenOver") var isWelcomeScreenOver = false
+    @Environment(\.modelContext) var modelContext
     
-    @State var isShowingLogin: Bool = true
+    @State var num = 1
+    @State var cont = 120
+    @State var selectedMode = 1
+    @State var isShowingMain: Bool = false
     
     var body: some View {
         VStack {
@@ -43,37 +40,42 @@ struct GoalView: View {
             .onChange(of: selectedMode, perform: { newMode in
                 switch newMode {
                 case 1:
-                    sharedData.counter = 120
+                    cont = 120
                     print("Lightly selected")
                 case 2:
-                    sharedData.counter = 150
+                    cont = 150
                     print("Moderately selected")
                 case 3:
-                    sharedData.counter = 180
+                    cont = 180
                     print("Highly selected")
                 default:
                     break
                 }
             })
             
-            GoalSelectorView(counter: $sharedData.counter)
+            GoalSelectorView(counter: $cont)
             
             ZStack {
                 RoundedRectangle(cornerRadius: 15)
                     .frame(width:350, height:60)
                     .foregroundColor(Color(red: 0.169, green: 0.169, blue: 0.182))
+                    .accessibilityHidden(/*@START_MENU_TOKEN@*/true/*@END_MENU_TOKEN@*/)
                 Text("Set Move Goal")
                     .font(.title2)
                     .fontWeight(.bold)
                     .foregroundStyle(Color(.label))
             } .padding(.top, 200)
                 .onTapGesture {
-                    dismiss()
+                    modelContext.insert(Goal(goal: cont))
+                    isWelcomeScreenOver = true
+                    isShowingMain.toggle()
                 }
-        }
-        .sheet(isPresented: $isShowingLogin, content: {
-            LoginView(height: "", weight: "")
-        })
+                .accessibilityElement(children: .combine)
+                .accessibilityAddTraits(.isButton)
+        }.preferredColorScheme(.dark)
+            .fullScreenCover(isPresented: $isShowingMain, content: {
+                MainPageView()
+            })
     }
 }
 

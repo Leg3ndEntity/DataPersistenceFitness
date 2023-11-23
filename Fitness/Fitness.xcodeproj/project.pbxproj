@@ -11,8 +11,9 @@
 		E00A61B42B08C528008F1A25 /* GoalSelectorView.swift in Sources */ = {isa = PBXBuildFile; fileRef = E00A61B32B08C528008F1A25 /* GoalSelectorView.swift */; };
 		E027F3EC2B07F38D00A2F661 /* ActivityRingView.swift in Sources */ = {isa = PBXBuildFile; fileRef = E027F3EB2B07F38D00A2F661 /* ActivityRingView.swift */; };
 		E027F3EF2B07FA8900A2F661 /* HealthKitManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = E027F3EE2B07FA8900A2F661 /* HealthKitManager.swift */; };
-		E037E03F2B0A792A0042270F /* LoginView2.swift in Sources */ = {isa = PBXBuildFile; fileRef = E037E03E2B0A792A0042270F /* LoginView2.swift */; };
-		E037E0412B0A79350042270F /* GoalView2.swift in Sources */ = {isa = PBXBuildFile; fileRef = E037E0402B0A79350042270F /* GoalView2.swift */; };
+		E027F7E32B0F96D000B2F9B2 /* Goal.swift in Sources */ = {isa = PBXBuildFile; fileRef = E027F7E22B0F96D000B2F9B2 /* Goal.swift */; };
+		E027F7E52B0FBA0300B2F9B2 /* Fitness.swift in Sources */ = {isa = PBXBuildFile; fileRef = E027F7E42B0FBA0300B2F9B2 /* Fitness.swift */; };
+		E027F7F62B0FC20900B2F9B2 /* ContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = E027F7F52B0FC20900B2F9B2 /* ContentView.swift */; };
 		E07711C62B0380D800572C4A /* FitnessApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = E07711C52B0380D800572C4A /* FitnessApp.swift */; };
 		E07711CA2B0380D900572C4A /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = E07711C92B0380D900572C4A /* Assets.xcassets */; };
 		E07711CD2B0380D900572C4A /* Preview Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = E07711CC2B0380D900572C4A /* Preview Assets.xcassets */; };
@@ -35,8 +36,9 @@
 		E027F3EB2B07F38D00A2F661 /* ActivityRingView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ActivityRingView.swift; sourceTree = "<group>"; };
 		E027F3ED2B07FA3600A2F661 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist; path = Info.plist; sourceTree = "<group>"; };
 		E027F3EE2B07FA8900A2F661 /* HealthKitManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HealthKitManager.swift; sourceTree = "<group>"; };
-		E037E03E2B0A792A0042270F /* LoginView2.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoginView2.swift; sourceTree = "<group>"; };
-		E037E0402B0A79350042270F /* GoalView2.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GoalView2.swift; sourceTree = "<group>"; };
+		E027F7E22B0F96D000B2F9B2 /* Goal.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Goal.swift; sourceTree = "<group>"; };
+		E027F7E42B0FBA0300B2F9B2 /* Fitness.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Fitness.swift; sourceTree = "<group>"; };
+		E027F7F52B0FC20900B2F9B2 /* ContentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContentView.swift; sourceTree = "<group>"; };
 		E07711C22B0380D800572C4A /* Fitness.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Fitness.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		E07711C52B0380D800572C4A /* FitnessApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FitnessApp.swift; sourceTree = "<group>"; };
 		E07711C92B0380D900572C4A /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
@@ -68,7 +70,7 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
-		E00A61B22B08C4D1008F1A25 /* Components */ = {
+		E027F7F42B0FBB9800B2F9B2 /* Componentes */ = {
 			isa = PBXGroup;
 			children = (
 				E027F3EB2B07F38D00A2F661 /* ActivityRingView.swift */,
@@ -78,7 +80,7 @@
 				E0BEAB552B03E1D000D21890 /* ChartView.swift */,
 				E0A34B232B09438C00E8AA93 /* BlurView.swift */,
 			);
-			path = Components;
+			path = Componentes;
 			sourceTree = "<group>";
 		};
 		E07711B92B0380D800572C4A = {
@@ -103,7 +105,8 @@
 				E027F3ED2B07FA3600A2F661 /* Info.plist */,
 				E0BEAB4E2B03C7F000D21890 /* Fitness.entitlements */,
 				E07711C52B0380D800572C4A /* FitnessApp.swift */,
-				E00A61B22B08C4D1008F1A25 /* Components */,
+				E027F7E42B0FBA0300B2F9B2 /* Fitness.swift */,
+				E027F7F42B0FBB9800B2F9B2 /* Componentes */,
 				E0BEAB542B03E17600D21890 /* Views */,
 				E094E8E52B056D4600AE3B69 /* Store */,
 				E07711C92B0380D900572C4A /* Assets.xcassets */,
@@ -125,6 +128,7 @@
 			children = (
 				E027F3EE2B07FA8900A2F661 /* HealthKitManager.swift */,
 				E0B2CF132B066F0500F3B7E7 /* User.swift */,
+				E027F7E22B0F96D000B2F9B2 /* Goal.swift */,
 			);
 			path = Store;
 			sourceTree = "<group>";
@@ -133,14 +137,13 @@
 			isa = PBXGroup;
 			children = (
 				E094E8E82B057D9300AE3B69 /* LoginView.swift */,
-				E037E03E2B0A792A0042270F /* LoginView2.swift */,
 				E094E8EA2B0580BB00AE3B69 /* GoalView.swift */,
-				E037E0402B0A79350042270F /* GoalView2.swift */,
 				E080AD302B05128100A0EC77 /* TabBar.swift */,
 				E080AD322B05156C00A0EC77 /* MainPageView.swift */,
 				E0A34B1B2B092AA700E8AA93 /* ActivityView.swift */,
 				E080AD2B2B04CF3100A0EC77 /* ModalView.swift */,
 				E080AD2D2B04DACD00A0EC77 /* AccountView.swift */,
+				E027F7F52B0FC20900B2F9B2 /* ContentView.swift */,
 			);
 			path = Views;
 			sourceTree = "<group>";
@@ -231,15 +234,16 @@
 				E027F3EF2B07FA8900A2F661 /* HealthKitManager.swift in Sources */,
 				E0B2CF142B066F0500F3B7E7 /* User.swift in Sources */,
 				E094E8E92B057D9300AE3B69 /* LoginView.swift in Sources */,
-				E037E0412B0A79350042270F /* GoalView2.swift in Sources */,
+				E027F7F62B0FC20900B2F9B2 /* ContentView.swift in Sources */,
+				E027F7E52B0FBA0300B2F9B2 /* Fitness.swift in Sources */,
 				E080AD2E2B04DACD00A0EC77 /* AccountView.swift in Sources */,
 				E0A34B1C2B092AA700E8AA93 /* ActivityView.swift in Sources */,
 				E0A34B222B0937ED00E8AA93 /* CalendarView.swift in Sources */,
 				E00A61B42B08C528008F1A25 /* GoalSelectorView.swift in Sources */,
 				E0BEAB562B03E1D000D21890 /* ChartView.swift in Sources */,
+				E027F7E32B0F96D000B2F9B2 /* Goal.swift in Sources */,
 				E094E8EB2B0580BB00AE3B69 /* GoalView.swift in Sources */,
 				E0A34B242B09438C00E8AA93 /* BlurView.swift in Sources */,
-				E037E03F2B0A792A0042270F /* LoginView2.swift in Sources */,
 				E080AD352B05161D00A0EC77 /* ActivityCardView.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

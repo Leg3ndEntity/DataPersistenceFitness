@@ -6,24 +6,27 @@
 //
 
 import SwiftUI
+
 struct ModalView: View {
     @Environment(\.dismiss) var dismiss
     
     var body: some View {
         NavigationStack{
-            VStack {
-                List(){
+            VStack{
+                List{
                     Section{
                         HStack(spacing: 25.0) {
                             Image(systemName: "person")
+                                .accessibilityHidden(/*@START_MENU_TOKEN@*/true/*@END_MENU_TOKEN@*/)
                             VStack(alignment: .leading, spacing: -2.0){
                                 Text("Simone Sarnataro")
                                     .fontWeight(.medium)
                                 Text("simone.sarnataro02@gmail.com")
                                     .font(.subheadline)
                                     .textContentType(.none)
+                                    .foregroundColor(.white)
                             }
-                        }
+                        }.accessibilityElement(children: .combine)
                     }
                     Section{
                         NavigationLink {
@@ -46,7 +49,6 @@ struct ModalView: View {
                     }
                     
                 }
-                //.environment(\.defaultMinListRowHeight, 80)
                 .navigationTitle("Account")
                 .navigationBarTitleDisplayMode(.inline)
                 .toolbar(content: {
@@ -64,8 +66,7 @@ struct ModalView: View {
                 
                 
             }
-        }
-        
+        }.preferredColorScheme(.dark)
     }
 }
 

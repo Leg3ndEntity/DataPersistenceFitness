@@ -6,27 +6,18 @@
 //
 
 import SwiftUI
-
-extension Double {
-    func rounded(toPlaces places: Int) -> Double {
-        let divisor = pow(10.0, Double(places))
-        return (self * divisor).rounded() / divisor
-    }
-}
+import SwiftData
 
 struct ActivityCardView: View {
-    
-    @EnvironmentObject var sharedData: SharedData
     @EnvironmentObject var healthKitManager: HealthKitManager
+    @Query var goal: [Goal]
     
     var body: some View {
         
-        
-        //        var cal: Double = Double(healthKitManager.energyBurnedValue)
-        //        var goal: Double = Double(sharedData.counter)
         let formattedTotalWalkTime = String(format: "%.2f", healthKitManager.walkDistance)
-        //        var percentage: Double = Double(healthKitManager.energyBurnedValue)/Double(sharedData.counter)
-        //        let roundedPercentage = percentage.rounded(toPlaces: 2)
+        let cal: Int = healthKitManager.energyBurnedValue
+        let goal: Int = goal[0].goal
+        let percentage: Double = Double(cal)/Double(goal)
         
         ZStack {
             Color(uiColor: .systemGray6)
@@ -38,7 +29,7 @@ struct ActivityCardView: View {
                                 .fontWeight(.bold)
                                 .foregroundColor(.white)
                             HStack {
-                                Text("\(healthKitManager.energyBurnedValue)/\(sharedData.counter)")
+                                Text("\((healthKitManager.energyBurnedValue))/\(goal)")
                                     .font(.title3)
                                     .fontWeight(.bold)
                                 Text("KCAL")
@@ -47,6 +38,7 @@ struct ActivityCardView: View {
                                 Spacer()
                             }.frame(width: 150)
                                 .foregroundColor(.ringColor1)
+                                .accessibilityElement(children: .combine)
                         }
                         VStack(alignment: .leading, spacing: 0){
                             Text("Steps")
@@ -56,7 +48,7 @@ struct ActivityCardView: View {
                                 .font(.title3)
                                 .fontWeight(.bold)
                                 .foregroundColor(.gray)
-                        }
+                        }.accessibilityElement(children: .combine)
                         VStack(alignment: .leading, spacing: 0){
                             Text("Distance")
                                 .fontWeight(.bold)
@@ -65,15 +57,15 @@ struct ActivityCardView: View {
                                 .font(.title3)
                                 .fontWeight(.bold)
                                 .foregroundColor(.gray)
-                        }
+                        }.accessibilityElement(children: .combine)
                     }.padding(.trailing, 160)
                     Spacer()
                     
                     ZStack {
-                        RingView(percentage: 0.17, backgroundColor: .ringColor2, startColor: .ringColor1, endColor: .ringColor3, thickness: 25)
+                        RingView(percentage: percentage, backgroundColor: .ringColor2, startColor: .ringColor1, endColor: .ringColor3, thickness: 25)
                             .scaleEffect(1.2)
                             .padding(.leading, 180)
-                        
+                            .accessibilityLabel(Text("\(Int(percentage*100))%"))
                         Image(systemName: "arrow.forward")
                             .resizable()
                             .frame(width: 15, height: 15, alignment: /*@START_MENU_TOKEN@*/.center/*@END_MENU_TOKEN@*/)
@@ -81,6 +73,7 @@ struct ActivityCardView: View {
                             .padding(.bottom, 122)
                             .padding(.leading, 178)
                             .bold()
+                            .accessibilityHidden(/*@START_MENU_TOKEN@*/true/*@END_MENU_TOKEN@*/)
                     }
                     
                 }
